@@ -38,7 +38,7 @@ export default function AdminPage() {
         adminPOAP.increasePoint(account, inputScore, 3n);
       }
     } else {
-      alert("Please connect to the correct network");
+      alert("Please connect to the polygon network");
     }
   };
   const decreasePoint = async () => {
@@ -57,7 +57,7 @@ export default function AdminPage() {
         adminPOAP.decreasePoint(account, inputScore, 3n);
       }
     } else {
-      alert("Please connect to the correct network");
+      alert("Please connect to polygon network");
     }
   };
 

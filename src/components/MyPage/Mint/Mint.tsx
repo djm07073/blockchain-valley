@@ -18,7 +18,7 @@ export default function Mint() {
         await welcomePOAP.mint().then((tx) => tx.wait());
         alert("Minting successful!"); // Minting 성공 메시지 추가
       } else {
-        alert("Please connect to the correct network");
+        alert("Please connect to polygon network");
       }
     } catch (error) {
       console.error("Error minting:", error); // 에러 처리 추가
