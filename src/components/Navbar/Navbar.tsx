@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet/ConnectWallet";
 import { ellipsisAddr } from "../../utils/ellipsisAddr";
+import logo from "../../../image/bvlogo.png";
 export const rates = ["WELCOME", "NEWBIE", "SENIOR", "ALUMNAI"];
 interface NavbarProps {
   account: string | null;
@@ -16,12 +17,7 @@ export default function Navbar({
 }: NavbarProps) {
   return (
     <header className="flex bg-black text-white p-4 items-center justify-between w-full">
-      <img
-        className="space-x-4 px-2 py-2"
-        src="../../../image/logo.ico"
-        width="70"
-        height="70"
-      />
+      <img className="space-x-4 px-2 py-2" src={logo} width="70" height="70" />
       <ul className="flex space-x-4 list-none">
         <li>
           <Link className="btn-link" to="/">
