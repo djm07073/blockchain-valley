@@ -19,8 +19,8 @@ export default function Navbar({
       <img
         className="space-x-4 px-2 py-2"
         src="../../../image/logo.ico"
-        width="100"
-        height="100"
+        width="70"
+        height="70"
       />
       <ul className="flex space-x-4 list-none">
         <li>
@@ -48,7 +48,7 @@ export default function Navbar({
         <li>
           {account === "" ? (
             <p className="bg-black text-white px-4 py-2 rounded cursor-pointer">
-              No Account
+              Account Required
             </p>
           ) : (
             <Link className="btn-link" to="mypage" state={{ account, chainId }}>
