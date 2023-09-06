@@ -28,7 +28,7 @@ export default function Mint() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-4">
-      <h1 className="text-4xl font-bold mb-4">Welcome to Our Website</h1>
+      <h1 className="text-4xl font-bold mb-4">Welcome to Blockchain Valley</h1>
       <h2 className="text-2xl rounded-lg">
         Mint and get your Blockchain Valley POAP! 🤗
       </h2>
