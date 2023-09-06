@@ -63,7 +63,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow-lg">
+    <div className="bg-white p-6 rounded shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-4">
       <h1 className="text-4xl font-light mb-4">👮‍♀️ Admin</h1>
       <div className="flex items-center space-x-4 mb-4">
         <div className="flex items-center">
@@ -87,11 +87,11 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-md">
+      <div className="bg-white p-4 rounded-lg ">
         <p className="text-lg font-light mb-2">
-          Selected POAP Type: {selectedRate}
+          Choose a POAP TYPE: {selectedRate}
         </p>
-        <div className="flex space-x-2">
+        <div className="flex space-x-4">
           {rates.map((rate) => (
             <button
               key={rate}
@@ -106,7 +106,7 @@ export default function AdminPage() {
             </button>
           ))}
         </div>
-        <div className="mt-4">
+        <div className="mt-8 flex space-x-6">
           <button
             onClick={increasePoint}
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
