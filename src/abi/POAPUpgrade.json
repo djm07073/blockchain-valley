@@ -1,0 +1,15 @@
+[
+  {
+    "inputs": [],
+    "name": "upgradeGrade",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

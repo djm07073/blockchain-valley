@@ -35,4 +35,3 @@
   - Increase point
   - Decrease point
   - Remove Member
-# BlockchainValley-WebPage
