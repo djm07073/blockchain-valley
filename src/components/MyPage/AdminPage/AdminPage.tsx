@@ -5,6 +5,7 @@ import { CONFIGS } from "../../../config/address";
 import { AdminBV__factory } from "../../../typechain";
 import { rates } from "../../Navbar/Navbar";
 import { checkCorrectChainId } from "../../../App";
+import { rateToEmoji } from "../MyPage";
 
 export default function AdminPage() {
   const [inputScore, setInputScore] = useState<number>(1);
@@ -62,34 +63,64 @@ export default function AdminPage() {
   };
 
   return (
-    <div>
-      <div className="flex">
-        <h1>Admin</h1>
-        <p>점수/ address</p>
-        <input
-          type="number"
-          value={inputScore}
-          onChange={handleInputChange}
-          min="1" // 최소값을 1로 설정
-        />
-        <input type="text" value={account} onChange={handleInputAccount} />
+    <div className="bg-white p-6 rounded shadow-lg">
+      <h1 className="text-4xl font-light mb-4">👮‍♀️ Admin</h1>
+      <div className="flex items-center space-x-4 mb-4">
+        <div className="flex items-center">
+          <p className="text-gray-600 mr-2">Address:</p>
+          <input
+            type="text"
+            value={account}
+            onChange={handleInputAccount}
+            className="px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div className="flex items-center">
+          <p className="text-gray-600 mr-2">Score:</p>
+          <input
+            type="number"
+            value={inputScore}
+            onChange={handleInputChange}
+            min="1"
+            className="px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
       </div>
-      <div>
-        <p>선택된 POAP: {selectedRate}</p>
-        <div>
+
+      <div className="bg-white p-4 rounded-lg shadow-md">
+        <p className="text-lg font-light mb-2">
+          Selected POAP Type: {selectedRate}
+        </p>
+        <div className="flex space-x-2">
           {rates.map((rate) => (
             <button
               key={rate}
               onClick={() => handleRateSelection(rate)}
-              className={selectedRate === rate ? "selected" : ""}
+              className={`rounded-full w-10 h-10 flex items-center justify-center focus:outline-none ${
+                selectedRate === rate
+                  ? "bg-black text-white"
+                  : "bg-gray-200 text-gray-600 hover:bg-blue-200"
+              }`}
             >
-              {rate}
+              {rateToEmoji(rate)}
             </button>
           ))}
         </div>
+        <div className="mt-4">
+          <button
+            onClick={increasePoint}
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none"
+          >
+            Give PoC
+          </button>
+          <button
+            onClick={decreasePoint}
+            className="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none"
+          >
+            Take PoC
+          </button>
+        </div>
       </div>
-      <button onClick={increasePoint}>Give PoC </button>
-      <button onClick={decreasePoint}>Take PoC</button>
     </div>
   );
 }

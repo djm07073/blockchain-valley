@@ -1,7 +1,8 @@
 export default function Ranking() {
   return (
-    <section>
-      <h1>Ranking</h1>
-    </section>
+    <div className="bg-white text-black p-8 rounded-lg shadow-lg">
+      <h1 className="text-4xl font-light mb-4">🏆 Ranking Board</h1>
+      <>Coming in October.😅</>
+    </div>
   );
 }

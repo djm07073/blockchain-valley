@@ -15,10 +15,13 @@ export default function UpgradeGrade({ poap }: UpgradeGradeProps) {
   };
 
   return (
-    <div>
-      <button className="" onClick={onClick}>
+    <section>
+      <button
+        className="bg-black hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        onClick={onClick}
+      >
         Upgrade My POAP
       </button>
-    </div>
+    </section>
   );
 }

@@ -41,7 +41,17 @@ const welcomePOAP = WelcomePOAP__factory.connect(
   CONFIGS[1][137].welcome,
   provider
 ) as WelcomePOAP;
-
+export const rateToEmoji = (rate: string) => {
+  if (rate === rates[0]) {
+    return "👶";
+  } else if (rate === rates[1]) {
+    return "👦";
+  } else if (rate === rates[2]) {
+    return "👨";
+  } else if (rate === rates[3]) {
+    return "👴";
+  }
+};
 export default function MyPage() {
   const { state } = useLocation();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -87,21 +97,28 @@ export default function MyPage() {
   });
 
   return (
-    <div>
+    <div className="bg-white text-black p-8 rounded-lg shadow-lg">
       {tokenId !== "" ? (
         <div>
-          <h1>My Page</h1>
-          <p>TokenId : {tokenId}</p>
-          <p>My Point : {point === "" ? "0" : point}</p>
-          <p>Rate : {rate}</p>
-          {poap !== "" ? <UpgradeGrade poap={poap} /> : null}
-          <p>{isAdmin ? <AdminPage /> : null} </p>
+          <div className="bg-white text-black p-8 rounded-lg shadow-lg">
+            <h1 className="text-4xl font-light  mb-4">🙌 My POAP </h1>
+            <p className="text-lg font-light mb-4">
+              1️⃣ My Token ID : {tokenId}
+            </p>
+            <p className="text-lg font-light mb-4">
+              2️⃣ My Point: {point === "" ? "0" : point}
+            </p>
+            <p className="text-lg font-light mb-4">
+              3️⃣ Rate: {rateToEmoji(rate)}
+            </p>
+            {poap !== "" && <UpgradeGrade poap={poap} />}
+          </div>
+          {isAdmin && <AdminPage />}
           <Ranking />
         </div>
       ) : (
         <Mint />
       )}
     </div>
-    // <p>{state.account}</p>
   );
 }
