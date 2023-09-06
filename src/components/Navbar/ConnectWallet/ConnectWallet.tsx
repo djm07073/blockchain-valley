@@ -1,4 +1,3 @@
-import React from "react";
 import { connectMetamask } from "../../../utils/metamask";
 
 interface ConnectWallerProps {
@@ -19,7 +18,11 @@ export default function ConnectWallet({
 
   return (
     <div>
-      <button className="btn" onClick={onConnect} disabled={Boolean(account)}>
+      <button
+        className="bg-black text-white hover:bg-red-600 hover:text-black px-4 py-2 rounded cursor-pointer transition duration-300 ease-in-out"
+        onClick={onConnect}
+        disabled={Boolean(account)}
+      >
         Connect Wallet
       </button>
     </div>

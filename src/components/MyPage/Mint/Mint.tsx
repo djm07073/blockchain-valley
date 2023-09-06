@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserProvider } from "ethers";
 import { WelcomePOAP__factory } from "../../../typechain";
 import { Signer } from "ethers";
@@ -34,7 +33,7 @@ export default function Mint() {
         Mint and get your Blockchain Valley POAP! 🤗
       </h2>
       <button
-        className="bg-black hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        className="bg-black hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
         onClick={handleMint}
       >
         Mint

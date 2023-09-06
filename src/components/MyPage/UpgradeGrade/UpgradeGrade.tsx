@@ -1,6 +1,3 @@
-import React, { useEffect } from "react";
-import { alumnaiPOAP, newBiePOAP, seniorPOAP, welcomePOAP } from "../MyPage";
-import { rates } from "../../Navbar/Navbar";
 import { BrowserProvider } from "ethers";
 import { POAPUpgrade__factory } from "../../../typechain";
 
@@ -19,7 +16,9 @@ export default function UpgradeGrade({ poap }: UpgradeGradeProps) {
 
   return (
     <div>
-      <button onClick={onClick}>Upgrade My POAP</button>
+      <button className="" onClick={onClick}>
+        Upgrade My POAP
+      </button>
     </div>
   );
 }

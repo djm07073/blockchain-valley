@@ -1,6 +1,6 @@
 import { BrowserProvider } from "ethers";
 import { Signer } from "ethers";
-import React, { useState } from "react";
+import { useState } from "react";
 import { CONFIGS } from "../../../config/address";
 import { AdminBV__factory } from "../../../typechain";
 import { rates } from "../../Navbar/Navbar";
@@ -13,12 +13,12 @@ export default function AdminPage() {
   const handleRateSelection = (rate: string) => {
     setSelectedRate(rate);
   }; // poap 타입을 설정
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     // 입력한 점수를 업데이트
     const newScore = parseInt(e.target.value, 10);
     setInputScore(newScore);
   };
-  const handleInputAccount = (e) => {
+  const handleInputAccount = (e: any) => {
     const newAccount = e.target.value;
     setAccount(newAccount);
   };
