@@ -63,7 +63,7 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-4">
+    <div className="bg-white p-6 rounded shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-6">
       <h1 className="text-4xl font-light mb-4">👮‍♀️ Admin</h1>
       <div className="flex items-center space-x-4 mb-4">
         <div className="flex items-center">
@@ -72,6 +72,7 @@ export default function AdminPage() {
             type="text"
             value={account}
             onChange={handleInputAccount}
+            placeholder="Address of member"
             className="px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
@@ -81,7 +82,7 @@ export default function AdminPage() {
             type="number"
             value={inputScore}
             onChange={handleInputChange}
-            min="1"
+            placeholder="PoC to give or seize"
             className="px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
@@ -99,7 +100,7 @@ export default function AdminPage() {
               className={`rounded-full w-10 h-10 flex items-center justify-center focus:outline-none ${
                 selectedRate === rate
                   ? "bg-black text-white"
-                  : "bg-gray-200 text-gray-600 hover:bg-blue-200"
+                  : "bg-gray-200 text-gray-600 hover:bg-red-200"
               }`}
             >
               {rateToEmoji(rate)}
@@ -117,7 +118,7 @@ export default function AdminPage() {
             onClick={decreasePoint}
             className="bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none"
           >
-            Take PoC
+            Seize PoC
           </button>
         </div>
       </div>
