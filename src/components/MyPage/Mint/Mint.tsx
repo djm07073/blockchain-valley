@@ -3,13 +3,11 @@ import { WelcomePOAP__factory } from "../../../typechain";
 import { Signer } from "ethers";
 import { CONFIGS } from "../../../config/address";
 import { checkCorrectChainId } from "../../../App";
-interface MintProps {
-  account: string | null;
-}
-export default function Mint({ account }: MintProps) {
+
+export default function Mint() {
   const handleMint = async () => {
     try {
-      if ((await checkCorrectChainId()) && account !== "") {
+      if (await checkCorrectChainId()) {
         const signer: Signer = await new BrowserProvider(
           window.ethereum
         ).getSigner();

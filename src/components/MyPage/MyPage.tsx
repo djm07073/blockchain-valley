@@ -131,7 +131,7 @@ export default function MyPage() {
           <Ranking />
         </div>
       ) : (
-        <Mint account={state.account} />
+        <Mint />
       )}
     </div>
   );
