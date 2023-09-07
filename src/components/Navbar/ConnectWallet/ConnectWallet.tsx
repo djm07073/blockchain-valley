@@ -1,3 +1,4 @@
+import { ellipsisAddr } from "../../../utils/ellipsisAddr";
 import { connectMetamask } from "../../../utils/metamask";
 
 interface ConnectWallerProps {
@@ -18,13 +19,23 @@ export default function ConnectWallet({
 
   return (
     <div>
-      <button
-        className="bg-black text-white hover:bg-red-600 hover:text-black px-4 py-2 rounded cursor-pointer transition duration-300 ease-in-out"
-        onClick={onConnect}
-        disabled={Boolean(account)}
-      >
-        Connect Wallet
-      </button>
+      {account === "" ? (
+        <div>
+          <button
+            className="bg-black text-white hover:bg-red-600 hover:text-black px-4 py-2 rounded cursor-pointer transition duration-300 ease-in-out"
+            onClick={onConnect}
+            disabled={Boolean(account)}
+          >
+            Connect Wallet
+          </button>
+        </div>
+      ) : (
+        <div>
+          <div className="bg-red-600 text-white px-4 py-2 rounded cursor-pointer">
+            {ellipsisAddr(account!)}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ConnectWallet from "./ConnectWallet/ConnectWallet";
-import { ellipsisAddr } from "../../utils/ellipsisAddr";
+
 import logo from "../../../image/bvlogo.png";
 export const rates = ["WELCOME", "NEWBIE", "SENIOR", "ALUMNAI"];
 interface NavbarProps {
@@ -42,30 +42,19 @@ export default function Navbar({
           </Link>
         </li>
         <li>
-          {account === "" ? (
-            <p className="bg-black text-white px-4 py-2 rounded cursor-pointer">
-              Account Required
-            </p>
-          ) : (
-            <Link className="btn-link" to="mypage" state={{ account, chainId }}>
-              <button className="bg-black text-white hover:bg-red-600 hover:text-black px-4 py-2 rounded cursor-pointer transition duration-300 ease-in-out">
-                My Page
-              </button>
-            </Link>
-          )}
+          <Link className="btn-link" to="mypage" state={{ account, chainId }}>
+            <button className="bg-black text-white hover:bg-red-600 hover:text-black px-4 py-2 rounded cursor-pointer transition duration-300 ease-in-out">
+              My Page
+            </button>
+          </Link>
         </li>
       </ul>
-      {account === "" ? (
-        <ConnectWallet
-          account={account}
-          setAccount={setAccount}
-          setChainId={setchainId}
-        />
-      ) : (
-        <div>
-          <div>{ellipsisAddr(account!)}</div>
-        </div>
-      )}
+
+      <ConnectWallet
+        account={account}
+        setAccount={setAccount}
+        setChainId={setchainId}
+      />
     </header>
   );
 }

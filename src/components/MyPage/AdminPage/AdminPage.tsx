@@ -2,12 +2,15 @@ import { BrowserProvider } from "ethers";
 import { Signer } from "ethers";
 import { useState } from "react";
 import { CONFIGS } from "../../../config/address";
-import { AdminBV__factory } from "../../../typechain";
+import { AdminBV__factory, Attendance__factory } from "../../../typechain";
 import { rates } from "../../Navbar/Navbar";
 import { checkCorrectChainId } from "../../../App";
 import { rateToEmoji } from "../MyPage";
-
-export default function AdminPage() {
+interface AdminPageProps {
+  lock: boolean;
+  setlock: (lock: boolean) => void;
+}
+export default function AdminPage({ lock, setlock }: AdminPageProps) {
   const [inputScore, setInputScore] = useState<number>(1);
   const [selectedRate, setSelectedRate] = useState(rates[0]);
   const [account, setAccount] = useState<string>("");
@@ -58,13 +61,47 @@ export default function AdminPage() {
         adminPOAP.decreasePoint(account, inputScore, 3n);
       }
     } else {
-      alert("Please connect to polygon network");
+      alert("Plese connect to polygon network");
     }
   };
-
+  const handleLock = async () => {
+    const signer: Signer = await new BrowserProvider(
+      window.ethereum
+    ).getSigner();
+    const attend = Attendance__factory.connect(
+      CONFIGS[1][137].attendance!,
+      signer
+    );
+    await attend.lockCheck().then((tx) => tx.wait());
+    setlock(true);
+  };
+  const handleUnlock = async () => {
+    const signer: Signer = await new BrowserProvider(
+      window.ethereum
+    ).getSigner();
+    const attend = Attendance__factory.connect(
+      CONFIGS[1][137].attendance!,
+      signer
+    );
+    await attend.unlockCheck().then((tx) => tx.wait());
+    setlock(false);
+  };
   return (
     <div className="bg-white p-6 rounded shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-6">
-      <h1 className="text-4xl font-light mb-4">👮‍♀️ Admin</h1>
+      <div className="flex px-4 py-4 mb-4 space-x-4">
+        <h1 className="text-4xl font-light mb-4">👮‍♀️ Admin</h1>
+        <div>
+          {lock ? (
+            <div className="flex-grow bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none mb-4">
+              <button onClick={handleUnlock}>Unlock Attendance</button>
+            </div>
+          ) : (
+            <div className="flex-grow bg-red-500 text-white px-4 py-2 rounded ml-2 hover:bg-red-600 focus:outline-none mb-4">
+              <button onClick={handleLock}>Lock Attendance</button>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="flex items-center space-x-4 mb-4">
         <div className="flex items-center">
           <p className="text-gray-600 mr-2">Address:</p>

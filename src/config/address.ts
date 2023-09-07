@@ -4,6 +4,7 @@ interface Config {
   newbie: string;
   senior: string;
   alumnai: string;
+  attendance?: string;
   rpcUrls: string;
 }
 interface Configs {
@@ -27,6 +28,7 @@ export const CONFIGS: Configs[] = [
       newbie: "0x47eaf58d1135e590c3e381219aa7f19f64776cc3",
       senior: "0xc579467d3835414556603dc8a147ac4681c46c07",
       alumnai: "0x26c706bfa42488f925879542b1ecab76d6110446",
+      attendance: "0x65d7D186A31D12e409791db97225671Fb4831348",
       rpcUrls: "https://polygon.blockpi.network/v1/rpc/public",
     },
   },

@@ -7,6 +7,8 @@ import {
   AdminBV__factory,
   AlumnaiPOAP,
   AlumnaiPOAP__factory,
+  Attendance,
+  Attendance__factory,
   NewBiePOAP,
   NewBiePOAP__factory,
   SeniorPOAP,
@@ -19,6 +21,7 @@ import Mint from "./Mint/Mint";
 import UpgradeGrade from "./UpgradeGrade/UpgradeGrade";
 import AdminPage from "./AdminPage/AdminPage";
 import Ranking from "./Ranking/Ranking";
+import Attend from "./Attendance/Attendance";
 const rpcUrl = CONFIGS[1][137].rpcUrls;
 const provider = new JsonRpcProvider(rpcUrl);
 const adminPOAP = AdminBV__factory.connect(
@@ -41,6 +44,11 @@ const welcomePOAP = WelcomePOAP__factory.connect(
   CONFIGS[1][137].welcome,
   provider
 ) as WelcomePOAP;
+export const attendContract = Attendance__factory.connect(
+  CONFIGS[1][137].attendance!,
+  provider
+) as Attendance;
+
 export const rateToEmoji = (rate: string) => {
   if (rate === rates[0]) {
     return "👶";
@@ -52,6 +60,7 @@ export const rateToEmoji = (rate: string) => {
     return "👴";
   }
 };
+
 export default function MyPage() {
   const { state } = useLocation();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -59,7 +68,7 @@ export default function MyPage() {
   const [rate, setRate] = useState<string>("");
   const [poap, setPoap] = useState<string>("");
   const [point, setPoint] = useState<string>("");
-
+  const [lock, setlock] = useState<boolean>(true);
   const balaceOfPOAP = async (account: string) => {
     if (account !== null) {
       if ((await alumnaiPOAP.balanceOf(account!)) === 1n) {
@@ -90,14 +99,16 @@ export default function MyPage() {
         setIsAdmin(true);
       }
     }
+    setlock(await attendContract.lock());
   };
 
   useEffect(() => {
     balaceOfPOAP(state.account);
-  });
+    console.log(lock);
+  }, []);
 
   return (
-    <div className="bg-white text-black p-8 rounded-lg shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]">
+    <div className="bg-white text-black p-8 rounded-lg ">
       {tokenId !== "" ? (
         <div>
           <div className="bg-white text-black p-8 rounded-lg shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-6">
@@ -111,13 +122,16 @@ export default function MyPage() {
             <p className="text-lg font-light mb-4">
               3️⃣ Rate: {rateToEmoji(rate)}
             </p>
-            {poap !== "" && <UpgradeGrade poap={poap} />}
+            <div className="mt-8 flex space-x-6">
+              {poap !== "" && <UpgradeGrade poap={poap} />}
+              <Attend rate={rate} lock={lock} />
+            </div>
           </div>
-          {isAdmin && <AdminPage />}
+          {isAdmin && <AdminPage lock={lock} setlock={setlock} />}
           <Ranking />
         </div>
       ) : (
-        <Mint />
+        <Mint account={state.account} />
       )}
     </div>
   );

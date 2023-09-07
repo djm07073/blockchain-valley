@@ -3,11 +3,13 @@ import { WelcomePOAP__factory } from "../../../typechain";
 import { Signer } from "ethers";
 import { CONFIGS } from "../../../config/address";
 import { checkCorrectChainId } from "../../../App";
-
-export default function Mint() {
+interface MintProps {
+  account: string | null;
+}
+export default function Mint({ account }: MintProps) {
   const handleMint = async () => {
     try {
-      if (await checkCorrectChainId()) {
+      if ((await checkCorrectChainId()) && account !== "") {
         const signer: Signer = await new BrowserProvider(
           window.ethereum
         ).getSigner();
@@ -18,7 +20,7 @@ export default function Mint() {
         await welcomePOAP.mint().then((tx) => tx.wait());
         alert("Minting successful!"); // Minting 성공 메시지 추가
       } else {
-        alert("Please connect to polygon network");
+        alert("Please connect wallet to polygon network");
       }
     } catch (error) {
       console.error("Error minting:", error); // 에러 처리 추가
