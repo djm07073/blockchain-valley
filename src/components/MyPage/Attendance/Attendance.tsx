@@ -1,8 +1,8 @@
-import { Attendance__factory } from "../../../typechain";
 import { CONFIGS } from "../../../config/address";
 import { BrowserProvider } from "ethers";
 import { Signer } from "ethers";
 import { rates } from "../../Navbar/Navbar";
+import { Attendance3th__factory } from "../../../typechain";
 
 export const rateToType = (rate: string) => {
   if (rate === rates[0]) {
@@ -26,12 +26,14 @@ export default function Attend({ rate, lock }: AttendanceProps) {
     const signer: Signer = await new BrowserProvider(
       window.ethereum
     ).getSigner();
-    const attend = Attendance__factory.connect(
+    const attend = Attendance3th__factory.connect(
       CONFIGS[1][137].attendance!,
       signer
     );
-    if (rate) {
-      await attend.attend(rateToType(rate)!).then((tx) => tx.wait());
+    if (rate === rates[0]) {
+      await attend.attend(true).then((tx) => tx.wait());
+    } else {
+      await attend.attend(false).then((tx) => tx.wait());
     }
   };
 

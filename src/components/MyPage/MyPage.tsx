@@ -7,8 +7,8 @@ import {
   AdminBV__factory,
   AlumnaiPOAP,
   AlumnaiPOAP__factory,
-  Attendance,
-  Attendance__factory,
+  Attendance3th,
+  Attendance3th__factory,
   NewBiePOAP,
   NewBiePOAP__factory,
   SeniorPOAP,
@@ -44,10 +44,10 @@ const welcomePOAP = WelcomePOAP__factory.connect(
   CONFIGS[1][137].welcome,
   provider
 ) as WelcomePOAP;
-export const attendContract = Attendance__factory.connect(
+export const attendContract = Attendance3th__factory.connect(
   CONFIGS[1][137].attendance!,
   provider
-) as Attendance;
+) as Attendance3th;
 
 export const rateToEmoji = (rate: string) => {
   if (rate === rates[0]) {
@@ -69,6 +69,8 @@ export default function MyPage() {
   const [poap, setPoap] = useState<string>("");
   const [point, setPoint] = useState<string>("");
   const [lock, setlock] = useState<boolean>(true);
+  const [counts, setCounts] = useState<string>("");
+  const [isloading, setLoading] = useState<boolean>(false);
   const balaceOfPOAP = async (account: string) => {
     if (account !== null) {
       if ((await alumnaiPOAP.balanceOf(account!)) === 1n) {
@@ -100,16 +102,17 @@ export default function MyPage() {
       }
     }
     setlock(await attendContract.lock());
+    setCounts((await attendContract.attended(account)).toString());
   };
 
   useEffect(() => {
     balaceOfPOAP(state.account);
-    console.log(lock);
-  }, []);
+    setLoading(true);
+  });
 
   return (
     <div className="bg-white text-black p-8 rounded-lg ">
-      {tokenId !== "" ? (
+      {!isloading ? null : tokenId !== "" ? (
         <div>
           <div className="bg-white text-black p-8 rounded-lg shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] mb-6">
             <h1 className="text-4xl font-light  mb-6">🙌 My POAP </h1>
@@ -120,7 +123,10 @@ export default function MyPage() {
               2️⃣ My Point: {point === "" ? "0" : point}
             </p>
             <p className="text-lg font-light mb-4">
-              3️⃣ Rate: {rateToEmoji(rate)}
+              3️⃣ Rate: {rateToEmoji(rate)} {rate}
+            </p>
+            <p className="text-lg font-light mb-4">
+              4️⃣ Attendance counts: {counts}
             </p>
             <div className="mt-8 flex space-x-6">
               {poap !== "" && <UpgradeGrade poap={poap} />}

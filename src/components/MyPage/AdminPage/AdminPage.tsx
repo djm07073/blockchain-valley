@@ -2,7 +2,7 @@ import { BrowserProvider } from "ethers";
 import { Signer } from "ethers";
 import { useState } from "react";
 import { CONFIGS } from "../../../config/address";
-import { AdminBV__factory, Attendance__factory } from "../../../typechain";
+import { AdminBV__factory, Attendance3th__factory } from "../../../typechain";
 import { rates } from "../../Navbar/Navbar";
 import { checkCorrectChainId } from "../../../App";
 import { rateToEmoji } from "../MyPage";
@@ -68,7 +68,7 @@ export default function AdminPage({ lock, setlock }: AdminPageProps) {
     const signer: Signer = await new BrowserProvider(
       window.ethereum
     ).getSigner();
-    const attend = Attendance__factory.connect(
+    const attend = Attendance3th__factory.connect(
       CONFIGS[1][137].attendance!,
       signer
     );
@@ -79,7 +79,7 @@ export default function AdminPage({ lock, setlock }: AdminPageProps) {
     const signer: Signer = await new BrowserProvider(
       window.ethereum
     ).getSigner();
-    const attend = Attendance__factory.connect(
+    const attend = Attendance3th__factory.connect(
       CONFIGS[1][137].attendance!,
       signer
     );

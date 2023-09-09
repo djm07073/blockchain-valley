@@ -26,9 +26,9 @@
   {
     "inputs": [
       {
-        "internalType": "enum AdminBV.POAPType",
-        "name": "_type",
-        "type": "uint8"
+        "internalType": "bool",
+        "name": "isFirst",
+        "type": "bool"
       }
     ],
     "name": "attend",

@@ -3,7 +3,7 @@
 /* eslint-disable */
 export type { AdminBV } from "./AdminBV";
 export type { AlumnaiPOAP } from "./AlumnaiPOAP";
-export type { Attendance } from "./Attendance";
+export type { Attendance3th } from "./Attendance3th";
 export type { ERC20 } from "./ERC20";
 export type { Multicall2 } from "./Multicall2";
 export type { NewBiePOAP } from "./NewBiePOAP";
@@ -13,7 +13,7 @@ export type { WelcomePOAP } from "./WelcomePOAP";
 export * as factories from "./factories";
 export { AdminBV__factory } from "./factories/AdminBV__factory";
 export { AlumnaiPOAP__factory } from "./factories/AlumnaiPOAP__factory";
-export { Attendance__factory } from "./factories/Attendance__factory";
+export { Attendance3th__factory } from "./factories/Attendance3th__factory";
 export { ERC20__factory } from "./factories/ERC20__factory";
 export { Multicall2__factory } from "./factories/Multicall2__factory";
 export { NewBiePOAP__factory } from "./factories/NewBiePOAP__factory";
