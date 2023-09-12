@@ -24,23 +24,23 @@ import Ranking from "./Ranking/Ranking";
 import Attend from "./Attendance/Attendance";
 const rpcUrl = CONFIGS[1][137].rpcUrls;
 const provider = new JsonRpcProvider(rpcUrl);
-const adminPOAP = AdminBV__factory.connect(
+export const adminPOAP = AdminBV__factory.connect(
   CONFIGS[1][137].admin,
   provider
 ) as AdminBV;
-const alumnaiPOAP = AlumnaiPOAP__factory.connect(
+export const alumnaiPOAP = AlumnaiPOAP__factory.connect(
   CONFIGS[1][137].alumnai,
   provider
 ) as AlumnaiPOAP;
-const seniorPOAP = SeniorPOAP__factory.connect(
+export const seniorPOAP = SeniorPOAP__factory.connect(
   CONFIGS[1][137].senior,
   provider
 ) as SeniorPOAP;
-const newBiePOAP = NewBiePOAP__factory.connect(
+export const newBiePOAP = NewBiePOAP__factory.connect(
   CONFIGS[1][137].newbie,
   provider
 ) as NewBiePOAP;
-const welcomePOAP = WelcomePOAP__factory.connect(
+export const welcomePOAP = WelcomePOAP__factory.connect(
   CONFIGS[1][137].welcome,
   provider
 ) as WelcomePOAP;

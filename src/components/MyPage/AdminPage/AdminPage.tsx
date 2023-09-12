@@ -5,18 +5,19 @@ import { CONFIGS } from "../../../config/address";
 import { AdminBV__factory, Attendance3th__factory } from "../../../typechain";
 import { rates } from "../../Navbar/Navbar";
 import { checkCorrectChainId } from "../../../App";
-import { rateToEmoji } from "../MyPage";
+import { rateToType } from "../Attendance/Attendance";
+import { alumnaiPOAP, newBiePOAP, seniorPOAP, welcomePOAP } from "../MyPage";
+
 interface AdminPageProps {
   lock: boolean;
   setlock: (lock: boolean) => void;
 }
+
 export default function AdminPage({ lock, setlock }: AdminPageProps) {
   const [inputScore, setInputScore] = useState<number>(1);
-  const [selectedRate, setSelectedRate] = useState(rates[0]);
+  const [type, setType] = useState<string>(rates[0]);
   const [account, setAccount] = useState<string>("");
-  const handleRateSelection = (rate: string) => {
-    setSelectedRate(rate);
-  }; // poap 타입을 설정
+
   const handleInputChange = (e: any) => {
     // 입력한 점수를 업데이트
     const newScore = parseInt(e.target.value, 10);
@@ -26,40 +27,44 @@ export default function AdminPage({ lock, setlock }: AdminPageProps) {
     const newAccount = e.target.value;
     setAccount(newAccount);
   };
+  const setPOAPType = async (account: string) => {
+    if ((await alumnaiPOAP.balanceOf(account!)) === 1n) {
+      setType(rates[3]);
+    } else if ((await seniorPOAP.balanceOf(account!)) === 1n) {
+      setType(rates[2]);
+    } else if ((await newBiePOAP.balanceOf(account!)) === 1n) {
+      setType(rates[1]);
+    } else if ((await welcomePOAP.balanceOf(account!)) === 1n) {
+      setType(rates[0]);
+    }
+  };
   const increasePoint = async () => {
     if (await checkCorrectChainId()) {
+      await setPOAPType(account);
+      console.log(type);
+      console.log(rateToType(type));
       const signer: Signer = await new BrowserProvider(
         window.ethereum
       ).getSigner();
       const adminPOAP = AdminBV__factory.connect(CONFIGS[1][137].admin, signer);
-      if (selectedRate === rates[0]) {
-        adminPOAP.increasePoint(account, inputScore, 0n);
-      } else if (selectedRate === rates[1]) {
-        adminPOAP.increasePoint(account, inputScore, 1n);
-      } else if (selectedRate === rates[2]) {
-        adminPOAP.increasePoint(account, inputScore, 2n);
-      } else if (selectedRate === rates[3]) {
-        adminPOAP.increasePoint(account, inputScore, 3n);
-      }
+      await adminPOAP
+        .increasePoint(account, inputScore, rateToType(type)!)
+        .then((tx) => tx.wait());
     } else {
       alert("Please connect to the polygon network");
     }
   };
   const decreasePoint = async () => {
     if (await checkCorrectChainId()) {
+      await setPOAPType(account);
       const signer: Signer = await new BrowserProvider(
         window.ethereum
       ).getSigner();
       const adminPOAP = AdminBV__factory.connect(CONFIGS[1][137].admin, signer);
-      if (selectedRate === rates[0]) {
-        adminPOAP.decreasePoint(account, inputScore, 0n);
-      } else if (selectedRate === rates[1]) {
-        adminPOAP.decreasePoint(account, inputScore, 1n);
-      } else if (selectedRate === rates[2]) {
-        adminPOAP.decreasePoint(account, inputScore, 2n);
-      } else if (selectedRate === rates[3]) {
-        adminPOAP.decreasePoint(account, inputScore, 3n);
-      }
+
+      await adminPOAP
+        .decreasePoint(account, inputScore, rateToType(type)!)
+        .then((tx) => tx.wait());
     } else {
       alert("Plese connect to polygon network");
     }
@@ -126,24 +131,6 @@ export default function AdminPage({ lock, setlock }: AdminPageProps) {
       </div>
 
       <div className="bg-white p-4 rounded-lg ">
-        <p className="text-lg font-light mb-2">
-          Choose a POAP TYPE: {selectedRate}
-        </p>
-        <div className="flex space-x-4">
-          {rates.map((rate) => (
-            <button
-              key={rate}
-              onClick={() => handleRateSelection(rate)}
-              className={`rounded-full w-10 h-10 flex items-center justify-center focus:outline-none ${
-                selectedRate === rate
-                  ? "bg-black text-white"
-                  : "bg-gray-200 text-gray-600 hover:bg-red-200"
-              }`}
-            >
-              {rateToEmoji(rate)}
-            </button>
-          ))}
-        </div>
         <div className="mt-8 flex space-x-6">
           <button
             onClick={increasePoint}
