@@ -20,7 +20,9 @@ interface AttendanceProps {
   rate: string;
   lock: boolean;
 }
-
+const errorAttendance = () => {
+  alert("You already attended this class!");
+};
 export default function Attend({ rate, lock }: AttendanceProps) {
   const handleAttend = async () => {
     const signer: Signer = await new BrowserProvider(
@@ -31,9 +33,15 @@ export default function Attend({ rate, lock }: AttendanceProps) {
       signer
     );
     if (rate === rates[0]) {
-      await attend.attend(true).then((tx) => tx.wait());
+      await attend
+        .attend(true)
+        .then((tx) => tx.wait())
+        .catch(() => errorAttendance());
     } else {
-      await attend.attend(false).then((tx) => tx.wait());
+      await attend
+        .attend(false)
+        .then((tx) => tx.wait())
+        .catch(() => errorAttendance());
     }
   };
 
